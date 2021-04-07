@@ -26,8 +26,8 @@ export default function Tweet(props) {
           <ModalTest idx={props.idx} content={props.content} funcEdit={props.funcEdit} />
           <button type="button" onClick={() => props.funcUp(props.idx)}>上へ</button>
           <button type="button" onClick={() => props.funcDown(props.idx)}>下へ</button>
-          <button type="button" >子要素作成</button>
-          <button type="button" >親を変更</button>
+          <button type="button" >左へ</button>
+          <button type="button" >右へ</button>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ export default function TweetMain(props) {
   const [tweets, setTweets] = React.useState([
     {
       idx: 0,
+      level: 0.
       icon: "🌽",
       displayName: "もろこし太郎",
       accountName: "morokoshi",
@@ -16,14 +17,25 @@ export default function TweetMain(props) {
     },
     {
       idx: 1,
+      level: 0.
       icon: "🦐",
-      displayName: "エビデンス",
+      displayName: "エビデンス0",
+      accountName: "evidence",
+      content: "かみにそたべい",
+      display: 'block'
+    },
+    {
+      idx: 1,
+      level: 1.
+      icon: "🦐",
+      displayName: "エビデンス1",
       accountName: "evidence",
       content: "かみにそたべい",
       display: 'block'
     },
     {
       idx: 2,
+      level: 0
       icon: "",
       displayName: "aaaa",
       accountName: "bbbb",
@@ -31,6 +43,39 @@ export default function TweetMain(props) {
       display: 'block'
     },
   ]);
+
+
+  var funcUp = function(idx). {
+    if (idx === 0) {
+      return;
+    }
+
+    var oldIdx = tweets[idx].idx;
+    tweets[idx].idx = oldIdx - 1;
+    tweets[idx - 1].idx = oldIdx;
+    tweets.sort(function(a, b) {
+      return a.idx - b.idx; //昇順
+    });
+    setTweets((prev) => [...prev]);
+  };
+
+  var funcDown = function(idx) {
+    if (idx === tweets.length - 1) {
+      return;
+    }
+
+    tweets[idx].idx = oldIdx + 1;
+    tweets[idx + 1].idx = oldIdx;
+    tweets.sort(function(a, b) {
+      return a.idx - b.idx; //昇順
+    });
+    setTweets((prev) => [...prev]);
+  };
+
+  var funcEdit = function(idx, content) {
+    tweets[idx].content = content;
+    setTweets((prev) => [...prev]);
+  }
 
   //TweetInputコンポーネントに渡すcallback関数を定義します。
   //このcallbackはTweetボタン押下時に動きます。  
@@ -49,8 +94,10 @@ export default function TweetMain(props) {
   return (
     <div>
       <TweetInput addTweet={addTweet} />
-      <Timeline tweets={tweets}/>
+      <Timeline tweets={tweets}
+        funcUp={funcUp}
+        funcDown={funcDown}
+        funcEdit={funcEdit}/>
     </div>
   );
 }
-

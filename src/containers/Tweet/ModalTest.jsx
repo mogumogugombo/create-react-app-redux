@@ -25,7 +25,7 @@ export default function ModalTest(props) {
     props.funcEdit(idx, content);
     setOpen(false);
   }
-  
+ 
   return (
     <div style={{display: 'inline'}}>
       <button type="button" onClick={handleOpen} className="status-action">
