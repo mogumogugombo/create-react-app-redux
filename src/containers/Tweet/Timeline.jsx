@@ -8,14 +8,14 @@ export default function Timeline(props) {
         <Tweet
           key={tw.idx}
           idx={tw.idx}
-          level={level}
+          level={tw.level}
           icon={tw.icon}
           displayName={tw.displayName}
           accountName={tw.accountName}
           content={tw.content}
-          funcUp={funcUp}
-          funcDown={funcDown}
-          funcEdit={funcEdit}
+          funcUp={props.funcUp}
+          funcDown={props.funcDown}
+          funcEdit={props.funcEdit}
         />
       );
     }

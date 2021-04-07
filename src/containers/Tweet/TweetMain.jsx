@@ -8,7 +8,7 @@ export default function TweetMain(props) {
   const [tweets, setTweets] = React.useState([
     {
       idx: 0,
-      level: 0.
+      level: 0,
       icon: "🌽",
       displayName: "もろこし太郎",
       accountName: "morokoshi",
@@ -17,7 +17,7 @@ export default function TweetMain(props) {
     },
     {
       idx: 1,
-      level: 0.
+      level: 0,
       icon: "🦐",
       displayName: "エビデンス0",
       accountName: "evidence",
@@ -26,7 +26,7 @@ export default function TweetMain(props) {
     },
     {
       idx: 1,
-      level: 1.
+      level: 1,
       icon: "🦐",
       displayName: "エビデンス1",
       accountName: "evidence",
@@ -35,7 +35,7 @@ export default function TweetMain(props) {
     },
     {
       idx: 2,
-      level: 0
+      level: 0,
       icon: "",
       displayName: "aaaa",
       accountName: "bbbb",
@@ -45,7 +45,7 @@ export default function TweetMain(props) {
   ]);
 
 
-  var funcUp = function(idx). {
+  var funcUp = function(idx) {
     if (idx === 0) {
       return;
     }
@@ -64,6 +64,7 @@ export default function TweetMain(props) {
       return;
     }
 
+    var oldIdx = tweets[idx].idx;
     tweets[idx].idx = oldIdx + 1;
     tweets[idx + 1].idx = oldIdx;
     tweets.sort(function(a, b) {
