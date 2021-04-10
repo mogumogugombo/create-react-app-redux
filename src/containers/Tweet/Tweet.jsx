@@ -12,16 +12,24 @@ export default function Tweet(props) {
   //依存配列(=[deps]コールバク関数が依存している要素が格納された配列) の要素のいずれかが変化した場合のみ  
   //メモ化した値を破棄し再計算します。
 
+  const addIndent = function(level) {
+    return '**'.repeat(level);
+  }
+  const getIndentStyle = function(level) {
+    return {margin-left: level * 20 + 'px'};
+  }
+
   return (
     <div className="tweet">
-      <div className="icon-container">{props.icon}</div>
       <div className="body-container">
-        <div className="status-display">
-          <span className="display-name">{props.displayName}</span>
-          <span className="account-name">@{props.accountName}</span>
+        <div style={getIndentStyle(props.level)}>
+        <div>
+          <span>reg:{props.regTime}</span>&nbsp;
+          <span>upd:{props.updTime}</span>
         </div>
         <div className="content">{props.content}</div>
         <div className="status-action">
+          <span>{addIndent(props.level)}<span/>
           <span onClick={toggleLike}>{liked ? '❤️' : '♡'}</span>
           <ModalTest idx={props.idx} content={props.content} funcEdit={props.funcEdit} />
           <button type="button" onClick={() => props.funcUp(props.idx)}>上へ</button>
@@ -29,8 +37,8 @@ export default function Tweet(props) {
           <button type="button" >左へ</button>
           <button type="button" >右へ</button>
         </div>
+        </div>
       </div>
     </div>
   );
 }
-

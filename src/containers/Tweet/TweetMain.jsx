@@ -9,67 +9,92 @@ export default function TweetMain(props) {
     {
       idx: 0,
       level: 0,
-      icon: "🌽",
-      displayName: "もろこし太郎",
-      accountName: "morokoshi",
+      regTime: "2021/04/01",
+      updTime: "2021/04/05",
       content: "今日も1日もろこしがうまいb",
       display: 'block'
     },
     {
       idx: 1,
       level: 0,
-      icon: "🦐",
-      displayName: "エビデンス0",
-      accountName: "evidence",
+      regTime: "2021/04/01",
+      updTime: "",
       content: "かみにそたべい",
       display: 'block'
     },
     {
       idx: 1,
       level: 1,
-      icon: "🦐",
-      displayName: "エビデンス1",
-      accountName: "evidence",
+      regTime: "2021/04/01",
+      updTime: "2021/04/03",
       content: "かみにそたべい",
       display: 'block'
     },
     {
       idx: 2,
       level: 0,
-      icon: "",
-      displayName: "aaaa",
-      accountName: "bbbb",
+      regTime: "2021/04/01",
+      updTime: "",
       content: "cccc",
       display: 'block'
     },
   ]);
 
+  var funcSort = function(a, b) {
+    if (a.idx === b.idx) {
+      return a.level - b.level; //昇順
+    } else {
+      return a.idx - b.idx; //昇順
+    }
+  };
 
-  var funcUp = function(idx) {
-    if (idx === 0) {
+  var funcUp = function(currIdx) {
+    if (currIdx === 0) {
       return;
     }
 
-    var oldIdx = tweets[idx].idx;
-    tweets[idx].idx = oldIdx - 1;
-    tweets[idx - 1].idx = oldIdx;
-    tweets.sort(function(a, b) {
-      return a.idx - b.idx; //昇順
-    });
+    if (tweets[currIdx].level === 0) {
+      tweets[currIdx].idx = currIdx - 1;
+      var prevIdx = currIdx - 1;
+      while (tweets[prevIdx].idx === currIdx - 1) {
+        tweets[prevIdx].idx = currIdx;
+        prevIdx = prevIdx - 1;
+      }
+    } else {
+      var oldLevel = tweets[currIdx].level;
+      if (oldLevel === 0) {
+        return;
+      }
+      tweets[currIdx].level = oldLevel - 1;
+      tweets[currIdx - 1].level = oldLevel;
+    }
+    tweets.sort(funcSort);
     setTweets((prev) => [...prev]);
   };
 
-  var funcDown = function(idx) {
-    if (idx === tweets.length - 1) {
+  var funcDown = function(currIdx) {
+    if (currIdx === tweets.length - 1) {
       return;
     }
-
-    var oldIdx = tweets[idx].idx;
-    tweets[idx].idx = oldIdx + 1;
-    tweets[idx + 1].idx = oldIdx;
-    tweets.sort(function(a, b) {
-      return a.idx - b.idx; //昇順
-    });
+    if (tweets[currIdx].level === 0) {
+      tweets[currIdx].idx = currIdx + 1;
+      tweets[currIdx + 1].idx = currIdx;
+      var prevIdx = currIdx - 1;
+      while (tweets[prevIdx].idx === currIdx - 1) {
+        tweets[prevIdx].idx = currIdx;
+        prevIdx = prevIdx - 1;
+      }
+    } else {
+      var nextIdx = tweets[currIdx + 1].idx;
+      if (nextIdx === currIdx) {
+        var oldLevel = tweets[currIdx].level;
+        tweets[currIdx].level = oldLevel + 1;
+        tweets[currIdx + 1].level = oldLevel;
+      } else {
+        return;
+      }
+    }
+    tweets.sort(funcSort)
     setTweets((prev) => [...prev]);
   };
 

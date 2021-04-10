@@ -9,9 +9,8 @@ export default function Timeline(props) {
           key={tw.idx}
           idx={tw.idx}
           level={tw.level}
-          icon={tw.icon}
-          displayName={tw.displayName}
-          accountName={tw.accountName}
+          regTime={tw.regTime}
+          updTime={tw.updTime}
           content={tw.content}
           funcUp={props.funcUp}
           funcDown={props.funcDown}
