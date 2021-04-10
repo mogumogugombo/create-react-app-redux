@@ -19,7 +19,7 @@ export default function TweetMain(props) {
       level: 0,
       regTime: "2021/04/01",
       updTime: "",
-      content: "かみにそたべい",
+      content: "かみにそたべい_0",
       display: 'block'
     },
     {
@@ -27,7 +27,7 @@ export default function TweetMain(props) {
       level: 1,
       regTime: "2021/04/01",
       updTime: "2021/04/03",
-      content: "かみにそたべい",
+      content: "かみにそたべい_1",
       display: 'block'
     },
     {
@@ -35,7 +35,15 @@ export default function TweetMain(props) {
       level: 0,
       regTime: "2021/04/01",
       updTime: "",
-      content: "cccc",
+      content: "cccc_0",
+      display: 'block'
+    },
+    {
+      idx: 2,
+      level: 1,
+      regTime: "2021/04/01",
+      updTime: "",
+      content: "cccc_1",
       display: 'block'
     },
   ]);
@@ -55,10 +63,18 @@ export default function TweetMain(props) {
 
     if (tweets[currIdx].level === 0) {
       tweets[currIdx].idx = currIdx - 1;
+      //自行(=ボタンを押下した行)の上にある塊(子がなければ１行のみだが。。)に、
+      //自行のidxを付ける
       var prevIdx = currIdx - 1;
-      while (tweets[prevIdx].idx === currIdx - 1) {
+      while (tweets[prevIdx] !== undefined && tweets[prevIdx].idx === currIdx - 1) {
         tweets[prevIdx].idx = currIdx;
         prevIdx = prevIdx - 1;
+      }
+      //自行(=ボタンを押下した行)と、その子要素のidxを１減算
+      var tempIdx = currIdx;
+      while (tweets[tempIdx] !== undefined && tweets[tempIdx].idx === currIdx) {
+        tweets[tempIdx].idx = currIdx - 1;
+        tempIdx = tempIdx + 1;
       }
     } else {
       var oldLevel = tweets[currIdx].level;
@@ -77,16 +93,21 @@ export default function TweetMain(props) {
       return;
     }
     if (tweets[currIdx].level === 0) {
-      tweets[currIdx].idx = currIdx + 1;
-      tweets[currIdx + 1].idx = currIdx;
-      var prevIdx = currIdx - 1;
-      while (tweets[prevIdx].idx === currIdx - 1) {
-        tweets[prevIdx].idx = currIdx;
-        prevIdx = prevIdx - 1;
+      //自行(=ボタンを押下した行)の下にある塊(子がなければ１行のみだが。。)に、
+      //自行のidxを付ける
+      var nextIdx = currIdx + 1;
+      while (tweets[nextIdx] !== undefined && tweets[nextIdx].idx === currIdx + 1) {
+        tweets[nextIdx].idx = currIdx;
+        nextIdx = nextIdx + 1;
+      }
+      //自行(=ボタンを押下した行)と、その子要素のidxを１加算
+      var tempIdx = currIdx;
+      while (tweets[tempIdx] !== undefined && tweets[tempIdx].idx === currIdx) {
+        tweets[tempIdx].idx = currIdx + 1;
+        tempIdx = tempIdx + 1;
       }
     } else {
-      var nextIdx = tweets[currIdx + 1].idx;
-      if (nextIdx === currIdx) {
+      if (tweets[currIdx + 1].idx === currIdx) {
         var oldLevel = tweets[currIdx].level;
         tweets[currIdx].level = oldLevel + 1;
         tweets[currIdx + 1].level = oldLevel;

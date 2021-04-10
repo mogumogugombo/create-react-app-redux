@@ -16,27 +16,27 @@ export default function Tweet(props) {
     return '**'.repeat(level);
   }
   const getIndentStyle = function(level) {
-    return {margin-left: level * 20 + 'px'};
+    return {marginLeft: level * 20 + 'px'};
   }
 
   return (
     <div className="tweet">
       <div className="body-container">
         <div style={getIndentStyle(props.level)}>
-        <div>
-          <span>reg:{props.regTime}</span>&nbsp;
-          <span>upd:{props.updTime}</span>
-        </div>
-        <div className="content">{props.content}</div>
-        <div className="status-action">
-          <span>{addIndent(props.level)}<span/>
-          <span onClick={toggleLike}>{liked ? '❤️' : '♡'}</span>
-          <ModalTest idx={props.idx} content={props.content} funcEdit={props.funcEdit} />
-          <button type="button" onClick={() => props.funcUp(props.idx)}>上へ</button>
-          <button type="button" onClick={() => props.funcDown(props.idx)}>下へ</button>
-          <button type="button" >左へ</button>
-          <button type="button" >右へ</button>
-        </div>
+            <div>
+                <span>reg:{props.regTime}</span>&nbsp;
+                <span>upd:{props.updTime}</span>
+            </div>
+            <div className="content">{props.content}</div>
+            <div className="status-action">
+                <span>{addIndent(props.level)}</span>
+                <span onClick={toggleLike}>{liked ? '❤️' : '♡'}</span>
+                <ModalTest idx={props.idx} content={props.content} funcEdit={props.funcEdit} />
+                <button type="button" onClick={() => props.funcUp(props.idx)}>上へ</button>
+                <button type="button" onClick={() => props.funcDown(props.idx)}>下へ</button>
+                <button type="button" >左へ</button>
+                <button type="button" >右へ</button>
+            </div>
         </div>
       </div>
     </div>
